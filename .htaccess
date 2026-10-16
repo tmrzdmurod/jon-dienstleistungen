@@ -1,0 +1,12 @@
+# Private Dateien nie ausliefern: Sitzungen, Passwort-Hashes, Tokens, Dumps, Logs.
+RedirectMatch 403 (^|/)(tmp|partials|tests|bin|\.git|\.osp|\.vscode)(/|$)
+
+<FilesMatch "\.(sql|log|json|ini|md)$">
+    Require all denied
+</FilesMatch>
+
+<FilesMatch "^(config(\.local)?(\.example)?|db_connect|local_auth|employee_workflow|auth|notify)\.php$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes

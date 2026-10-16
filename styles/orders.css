@@ -1,0 +1,176 @@
+/* Meine Buchungen – baut auf styles/site.css auf. */
+
+.orders-section {
+    display: grid;
+    gap: 14px;
+    max-width: 900px;
+}
+
+.order-item {
+    --tone: var(--muted);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px 28px;
+    padding: 20px 24px;
+    border-radius: var(--radius-lg);
+    border-left: 5px solid var(--tone);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.order-item.pending {
+    --tone: var(--sun);
+}
+
+.order-item.approved {
+    --tone: var(--ok);
+}
+
+.order-item.rejected {
+    --tone: var(--err);
+}
+
+.order-date {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.order-date > i {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--blue-50);
+    color: var(--blue);
+    font-size: 1.1rem;
+}
+
+.order-date span {
+    display: grid;
+}
+
+.order-date small {
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.order-date b {
+    font: 700 1.18rem/1.3 var(--font-display);
+    color: var(--ink);
+    white-space: nowrap;
+}
+
+.order-meta {
+    display: grid;
+    gap: 4px;
+    font-size: 0.92rem;
+    color: var(--muted);
+}
+
+.order-meta i {
+    width: 20px;
+    color: #9aa5b6;
+}
+
+.order-side {
+    display: grid;
+    justify-items: end;
+    gap: 10px;
+}
+
+.order-reviewed {
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--warn);
+}
+
+.order-item .message {
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+.orders-empty {
+    padding: 56px 24px;
+    border: 2px dashed #cbd3df;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    text-align: center;
+}
+
+.orders-empty > i {
+    margin-bottom: 14px;
+    font-size: 2.4rem;
+    color: var(--blue);
+}
+
+.orders-empty h2 {
+    font-size: 1.3rem;
+}
+
+.orders-empty p {
+    max-width: 420px;
+    margin: 8px auto 22px;
+    color: var(--muted);
+}
+
+/* ---------- Bewertungsdialog ---------- */
+
+.modal-meta {
+    margin-bottom: 18px;
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+/* Sterne stehen im Markup 5→1; umgekehrte Reihenfolge erlaubt die Hover-Kette. */
+#starRating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-bottom: 16px;
+}
+
+#starRating .star {
+    font-size: 1.9rem;
+    color: #cdd4df;
+    cursor: pointer;
+    transition: color 0.12s ease, transform 0.12s ease;
+}
+
+#starRating .star:hover,
+#starRating .star:hover ~ .star,
+#starRating .star.active {
+    color: var(--sun);
+}
+
+#starRating .star:hover {
+    transform: scale(1.12);
+}
+
+.char-counter {
+    margin: 6px 0 16px;
+    font-size: 0.8rem;
+    text-align: right;
+    color: var(--muted);
+}
+
+.char-counter.warning {
+    color: var(--err);
+}
+
+@media (max-width: 720px) {
+    .order-item {
+        grid-template-columns: 1fr;
+        padding: 18px;
+    }
+
+    .order-side {
+        justify-items: start;
+    }
+}

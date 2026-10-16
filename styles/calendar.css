@@ -1,0 +1,450 @@
+/* Buchungskalender – baut auf styles/site.css auf. */
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 28px;
+    align-items: start;
+}
+
+.calendar {
+    padding: 26px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.calendar-head h2 {
+    min-width: 190px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.calendar-head h2 span {
+    font-weight: 400;
+    color: var(--muted);
+}
+
+.calendar-step {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink);
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.calendar-step:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+}
+
+.calendar-controls {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.calendar-controls select {
+    width: auto;
+    min-height: 40px;
+    padding: 6px 12px;
+}
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.calendar-weekdays {
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--muted);
+}
+
+.calendar-weekdays span:nth-child(n + 6) {
+    color: var(--clay);
+}
+
+.calendar-day {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    min-height: 84px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    background: #fff;
+    font: inherit;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, background-color 0.15s ease;
+}
+
+.calendar-day-hidden {
+    visibility: hidden;
+}
+
+.day-no {
+    font: 700 1.1rem/1 var(--font-display);
+}
+
+.day-state {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ok);
+}
+
+.calendar-day:not(.past):not(.pending):not(.approved):not(.booked-other):hover {
+    border-color: var(--blue);
+    background: var(--blue-50);
+    box-shadow: 0 6px 16px rgba(26, 98, 230, 0.16);
+    transform: translateY(-2px);
+}
+
+.calendar-day.today .day-no {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    margin: -5px 0 0 -6px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-size: 0.98rem;
+}
+
+.calendar-day.past {
+    background: var(--mist);
+    border-color: transparent;
+    color: #a3adbc;
+    cursor: default;
+}
+
+.calendar-day.pending {
+    background: var(--warn-50);
+    border-color: #f1cd7a;
+    cursor: default;
+}
+
+.calendar-day.pending .day-state {
+    color: var(--warn);
+}
+
+.calendar-day.approved {
+    background: var(--ok-50);
+    border-color: #9bd8b6;
+    cursor: default;
+}
+
+.calendar-day.rejected {
+    background: var(--err-50);
+    border-color: #efb1b1;
+}
+
+.calendar-day.rejected .day-state {
+    color: var(--err);
+}
+
+.calendar-day.booked-other {
+    background:
+        repeating-linear-gradient(135deg, transparent 0 7px, rgba(13, 19, 33, 0.05) 7px 9px),
+        var(--mist);
+    border-color: var(--line);
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+.calendar-day.booked-other .day-state {
+    color: var(--muted);
+}
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin: 22px 0 0;
+    padding: 18px 0 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+    font-size: 0.86rem;
+    color: var(--muted);
+}
+
+.dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 4px;
+    vertical-align: -1px;
+    border: 1.5px solid var(--line);
+    background: #fff;
+}
+
+.dot--pending {
+    background: var(--warn-50);
+    border-color: #f1cd7a;
+}
+
+.dot--approved {
+    background: var(--ok-50);
+    border-color: #9bd8b6;
+}
+
+.dot--rejected {
+    background: var(--err-50);
+    border-color: #efb1b1;
+}
+
+.dot--other {
+    background: repeating-linear-gradient(135deg, var(--mist) 0 3px, #c9d1dd 3px 4px);
+}
+
+/* ---------- Seitenspalte ---------- */
+
+.booking-side {
+    display: grid;
+    gap: 18px;
+}
+
+.side-card {
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow-sm);
+}
+
+.side-card h3 {
+    margin-bottom: 16px;
+    font-size: 1.12rem;
+}
+
+.side-steps {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: step;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.side-steps li {
+    position: relative;
+    padding-left: 46px;
+    counter-increment: step;
+}
+
+.side-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 2px;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--blue-50);
+    color: var(--blue);
+    font-weight: 800;
+}
+
+.side-steps b {
+    display: block;
+    color: var(--ink);
+    font-size: 0.96rem;
+}
+
+.side-card--dark {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    background:
+        linear-gradient(118deg, transparent 0 72%, rgba(26, 98, 230, 0.45) 72% 84%, transparent 84%),
+        var(--ink);
+}
+
+.side-card--dark > i {
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+    color: var(--sun);
+}
+
+.side-card--dark h3 {
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.side-card--dark p {
+    margin-bottom: 18px;
+}
+
+/* ---------- Buchungsdialog ---------- */
+
+.booking-date {
+    margin-bottom: 18px;
+    padding: 10px 14px;
+    border-radius: var(--radius);
+    background: var(--blue-50);
+    color: var(--blue-600);
+    font-weight: 700;
+}
+
+.booking-form form {
+    display: grid;
+}
+
+.booking-form label {
+    margin-top: 14px;
+}
+
+.booking-form label:first-of-type {
+    margin-top: 0;
+}
+
+.service-quick-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.service-quick-btn {
+    padding: 6px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    font: 600 0.82rem/1.3 var(--font);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.service-quick-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.service-quick-btn.is-active {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: #fff;
+}
+
+.selected-service-note,
+.booking-hint {
+    margin-top: 8px;
+    font-size: 0.84rem;
+    color: var(--muted);
+}
+
+.booking-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.booking-actions .submit {
+    flex: 1;
+}
+
+@media (max-width: 980px) {
+    .booking-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .booking-side {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .calendar {
+        padding: 16px 12px;
+    }
+
+    .calendar-head {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .calendar-head h2 {
+        min-width: 0;
+        flex: 1;
+        font-size: 1.22rem;
+    }
+
+    .calendar-controls {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .calendar-controls select {
+        flex: 1;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid {
+        gap: 4px;
+    }
+
+    .calendar-day {
+        min-height: 54px;
+        padding: 6px 4px;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+    }
+
+    .day-no {
+        font-size: 0.98rem;
+    }
+
+    .day-state {
+        font-size: 0;
+    }
+
+    /* Auf dem Handy trägt die Farbe der Zelle den Status. */
+    .calendar-day .day-state::before {
+        content: "";
+        display: block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+    .calendar-day.past .day-state::before {
+        display: none;
+    }
+
+    .calendar-day.today .day-no {
+        margin: 0;
+        width: 26px;
+        height: 26px;
+    }
+
+    .booking-side {
+        grid-template-columns: 1fr;
+    }
+}

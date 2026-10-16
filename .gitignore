@@ -1,0 +1,9 @@
+/tmp/
+/sessions/
+/cache/
+.env
+config.local.php
+
+# Lokale Umgebung
+.osp/
+/errors.log
